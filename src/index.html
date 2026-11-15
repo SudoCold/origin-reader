@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; img-src 'self' data:; connect-src 'self' file:; object-src 'none'; base-uri 'none'">
+  <title>Origin Reader</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="titlebar"><span class="titlebar-mark">◒</span> Origin Reader <span class="titlebar-note">A little less. A little clearer.</span></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Origin home"><span class="brand-mark">o<span></span></span>origin<span class="brand-dot">.</span></a>
+      <div class="sidebar-caption">YOUR READING SPACE</div>
+      <button class="open-button" id="open-document"><span data-icon="plus"></span> Open document <kbd>Ctrl O</kbd></button>
+      <div class="library-heading"><span>Library</span><span class="library-count" id="library-count">1</span></div>
+      <div class="library-list" id="library-list"></div>
+      <div class="sidebar-bottom"><span class="private-dot"></span><div>Just you and your words.<small>Documents stay on this device.</small></div></div>
+    </aside>
+    <main class="main">
+      <header class="toolbar">
+        <div class="document-heading"><button class="icon-button menu-button" id="toggle-library" title="Toggle library" aria-label="Toggle library"><span data-icon="panel"></span></button><span class="document-icon" data-icon="document"></span><div><h1 id="document-title">The art of paying attention</h1><span id="document-subtitle">A short introduction to Origin</span></div></div>
+        <div class="toolbar-actions"><button class="icon-button" id="toggle-theme" title="Switch color theme" aria-label="Switch color theme"><span data-icon="sun"></span></button><button class="icon-button" id="fullscreen" title="Full screen · F11" aria-label="Full screen"><span data-icon="expand"></span></button><span class="toolbar-divider"></span><button class="settings-toggle" id="toggle-settings" aria-label="Reading settings" aria-expanded="false"><span data-icon="sliders"></span><span>Reading settings</span></button></div>
+      </header>
+      <section class="reader" aria-label="Document reader">
+        <div class="reading-meta"><span class="eyebrow"><i></i> FOCUS READER</span><span id="page-label">PAGE 1 OF 3</span></div>
+        <div class="focus-surface" id="focus-surface">
+          <div class="focus-corner top-left"></div><div class="focus-corner bottom-right"></div>
+          <div class="word-area" id="word-area"><p class="reading-text" id="reading-text" aria-live="polite" aria-atomic="true"></p></div>
+          <div class="end-label" id="end-label" hidden><span data-icon="check"></span> You’ve reached the end. Nicely read.</div>
+        </div>
+        <div class="reading-caption">Space to think. A few words at a time.</div>
+        <div class="navigation"><button class="nav-button" id="previous" aria-label="Previous words" title="Previous words · Left arrow"><span data-icon="arrow-left"></span><span>Previous</span></button><span class="chunk-count" id="chunk-count">1 <span>/ 30</span></span><button class="nav-button next" id="next" aria-label="Next words" title="Next words · Right arrow"><span>Next words</span><span data-icon="arrow-right"></span></button></div>
+      </section>
+      <footer class="reading-footer"><div class="progress-info"><span id="progress-label">Your next good read starts here</span><span id="percent-label">0%</span></div><input type="range" id="progress" min="0" max="100" value="0" aria-label="Reading position"><div class="footer-details"><span><kbd>←</kbd><kbd>→</kbd> to move through words</span><button id="show-source"><span data-icon="align"></span> Page context</button><span id="words-label">6 words at a time</span></div></footer>
+    </main>
+  </div>
+  <section class="settings-panel" id="settings-panel" aria-label="Reading settings" hidden><div class="panel-heading"><h2>Make it your own</h2><button class="icon-button" id="close-settings" aria-label="Close settings"><span data-icon="close"></span></button></div><p>A comfortable pace is your own pace.</p><label for="words-per-step">Words per step <output id="words-value">6</output></label><input id="words-per-step" type="range" min="1" max="24" value="6"><div class="range-labels"><span>One word</span><span>24 words</span></div><label for="font-size">Text size <output id="font-value">64</output></label><input id="font-size" type="range" min="32" max="96" step="2" value="64"><div class="range-labels"><span>Aa</span><span class="large-aa">Aa</span></div><label for="font-family">Reading font</label><select id="font-family"><option value="serif">Literary · Serif</option><option value="sans">Clean · Sans serif</option></select><p class="settings-note">Text automatically fits your window.<br>Your place is saved as you read.</p></section>
+  <dialog id="source-dialog"><div class="panel-heading"><div><span class="eyebrow">A LITTLE CONTEXT</span><h2 id="source-title">Page 1</h2></div><button class="icon-button" id="close-source" aria-label="Close page context"><span data-icon="close"></span></button></div><div id="source-text"></div><p class="dialog-hint">The highlighted words are your current place.</p></dialog>
+  <dialog id="password-dialog"><form id="password-form"><div class="panel-heading"><h2>This PDF is protected</h2></div><p>Enter its password to start reading.</p><label for="pdf-password">PDF password</label><input id="pdf-password" type="password" autocomplete="off" required><p id="password-error" role="alert"></p><div class="dialog-actions"><button type="button" id="cancel-password" class="nav-button">Cancel</button><button type="submit" class="nav-button next">Unlock PDF</button></div></form></dialog>
+  <div class="loading-overlay" id="loading" hidden><span class="spinner"></span><h2 id="loading-label">Opening your document…</h2><p>Making room for the words.</p></div>
+  <div class="drop-overlay" id="drop-overlay" hidden><span data-icon="document"></span><h2>A new perspective awaits.</h2><p>Drop a PDF or text file to start reading.</p></div>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <input type="file" id="file-input" accept=".pdf,.txt,.md,application/pdf,text/plain" hidden>
+  <script src="app.mjs" type="module"></script>
+</body>
+</html>
